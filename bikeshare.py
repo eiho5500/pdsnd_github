@@ -4,6 +4,7 @@ import numpy as np
 import calendar as cl
 import datetime as dt
 
+# Create a dictionary for the cities and their respective data sets
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
@@ -11,6 +12,7 @@ CITY_DATA = { 'chicago': 'chicago.csv',
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
+    At the moment only the pre-defined cities can be used.
 
     Returns:
         (str) city - name of the city to analyze
@@ -19,11 +21,11 @@ def get_filters():
     """
 
     print('Hello! Let\'s explore some US bikeshare data!\n')
-    # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
+    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     city = '0'
     month = ' '
     day = ' '
-    city_select = ['c', 'n', 'w']
+    city_select = ['c', 'n', 'w'] #It would be great to make this more flexible in case more cities will be added or cities will be changed
     month_select = ['all', '1', '2', '3', '4', '5', '6']
     day_select = ['all', '1', '2', '3', '4', '5', '6', '7']
 
@@ -36,7 +38,7 @@ def get_filters():
             city = key
             break
 
-    # TO DO: get user input for month (all, january, february, ... , june)
+    # get user input for month (all, january, february, ... , june)
     while month not in month_select:
         try:
             month = input('\nPlease select a month between January and June you want to investigate by entering the respective number.\nTo select all at once, just press enter.\nEnter value:')
@@ -48,7 +50,7 @@ def get_filters():
             if month not in month_select:
                 print('This was no valid input, please try again!\n')
 
-    # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
+    # get user input for day of week (all, monday, tuesday, ... sunday)
     while day not in day_select:
         try:
             day = input('Please select a weekday you want to investigate by entering the respective number (Monday = 1 to Sunday =7).\nTo select all at once, just press enter.\nEnter value:')
@@ -106,24 +108,25 @@ def load_data(city, month, day):
 
 def time_stats(df):
     """Displays statistics on the most frequent times of travel.
+
     But only displays statistics which make sense.
-    Eg.g if just one weekday was selected to be displayed,
+    E.g. if just one weekday was selected to be displayed,
     the calculation of the most commmon day of the week for rentals will not be performed"""
 
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
 
-    # TO DO: display the most common month
+    # display the most common month
     if df['Month'].nunique() > 1:
         most_common_month = int(df['Month'].mode()[0])
         print('Most trips have been booked in {}.'.format(cl.month_name[most_common_month]))
 
-    # TO DO: display the most common day of week
+    # display the most common day of week
     if df['Day_of_week'].nunique() > 1:
         most_common_day = df['Day_of_week'].mode()[0]
         print('Most trips have been booked on {}s.'.format(most_common_day))
 
-    # TO DO: display the most common start hour
+    # display the most common start hour
     most_common_hour = df['Start Time'].dt.hour.mode()[0]
     print('Most trips started between {}:00 and {}:00.'.format(most_common_hour, most_common_hour+1))
 
@@ -137,15 +140,15 @@ def station_stats(df):
     print('\nCalculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
 
-    # TO DO: display most commonly used start station
+    # display most commonly used start station
     most_common_start = df['Start Station'].mode()[0]
     print('Most trips started at {}.'.format(most_common_start))
 
-    # TO DO: display most commonly used end station
+    # display most commonly used end station
     most_common_end = df['End Station'].mode()[0]
     print('Most trips ended at {}.'.format(most_common_end))
 
-    # TO DO: display most frequent combination of start station and end station trip
+    # display most frequent combination of start station and end station trip
     df['Route'] = df['Start Station'] + ' to ' + df['End Station']
     most_common_route = df['Route'].mode()[0]
     print('Most common route is from {}.'.format(most_common_route))
@@ -159,11 +162,11 @@ def trip_duration_stats(df):
 
     print('\nCalculating Trip Duration...\n')
     start_time = time.time()
-    # TO DO: display total travel time
+    # display total travel time
     total_travel_time = df['Trip Duration'].sum()
     total_travel_time = str(dt.timedelta(seconds=int(total_travel_time)))
     print('The total time bikes were used sums up to {} of travel.'.format(total_travel_time))
-    # TO DO: display mean travel time
+    # display mean travel time
     mean_travel_time = df['Trip Duration'].mean()
     mean_travel_time = str(dt.timedelta(seconds=int(mean_travel_time)))
     print('The average rental duration per trip was {}.'.format(mean_travel_time))
@@ -181,17 +184,17 @@ def user_stats(df):
     print('\nCalculating User Stats...\n')
     start_time = time.time()
 
-    # TO DO: Display counts of user types
+    # Display counts of user types
     user_types = df['User Type'].value_counts().to_dict()
     for user_type in user_types:
         print('Users of the type {} rented bikes {} times.'.format(user_type, user_types[user_type]))
 
-    # TO DO: Display counts of gender
+    # Display counts of gender
     try:
         gender_split = df['Gender'].value_counts().to_dict()
         for gender in gender_split:
             print('{} users rented bikes {} times.'.format(gender, gender_split[gender]))
-    # TO DO: Display earliest, most recent, and most common year of birth
+    # Display earliest, most recent, and most common year of birth
         earliest_birth_year = int(df['Birth Year'].min())
         recent_birth_year = int(df['Birth Year'].max())
         common_birth_year = int(df['Birth Year'].mode()[0])
@@ -211,6 +214,7 @@ def task_loop(city, month, day):
 
     Returns:
         n as True/Fales to define if data selection will be repeated or not"""
+
     if month == 'all':
         month = 'all available months'
     if day == 'all':
@@ -223,8 +227,9 @@ def task_loop(city, month, day):
     return n
 
 def analysis_selection(df):
-    """Serves that the user can select which type of analysis he wants to conduct."""
-    
+    """Serves that the user can select which type of analysis he wants to conduct.
+    This helps to reduce the number of operations to be run and limits the number of displayed rows."""
+
     while True:
         try:
             analysis = int(input('Please select the analysis you want to run by entering the analysis number:\n1 - Rental Times\n2 - Stations and Routes\n3 - Rental duration\n4 - Users\n5 - quit analysis selection\nEnter value:'))
