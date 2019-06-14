@@ -130,7 +130,7 @@ def time_stats(df):
     most_common_hour = df['Start Time'].dt.hour.mode()[0]
     print('Most trips started between {}:00 and {}:00.'.format(most_common_hour, most_common_hour+1))
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+#    print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 
@@ -153,7 +153,7 @@ def station_stats(df):
     most_common_route = df['Route'].mode()[0]
     print('Most common route is from {}.'.format(most_common_route))
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+#    print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 
@@ -172,7 +172,7 @@ def trip_duration_stats(df):
     print('The average rental duration per trip was {}.'.format(mean_travel_time))
 
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+#    print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 
@@ -201,7 +201,7 @@ def user_stats(df):
         print('Oldest users are born in {}.\nYoungest users are born in {}.\nMost users are born in {}.'.format(earliest_birth_year, recent_birth_year, common_birth_year))
 
     finally:
-        print("\nThis took %s seconds." % (time.time() - start_time))
+#        print("\nThis took %s seconds." % (time.time() - start_time))
         print('-'*40)
 
 def task_loop(city, month, day):
