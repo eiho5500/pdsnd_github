@@ -111,7 +111,6 @@ def time_stats(df):
     the calculation of the most commmon day of the week for rentals will not be performed"""
 
     print('\nCalculating The Most Frequent Times of Travel...\n')
-    start_time = time.time()
 
     # TO DO: display the most common month
     if df['Month'].nunique() > 1:
@@ -134,7 +133,6 @@ def station_stats(df):
     """Displays statistics on the most popular stations and trip."""
 
     print('\nCalculating The Most Popular Stations and Trip...\n')
-    start_time = time.time()
 
     # TO DO: display most commonly used start station
     most_common_start = df['Start Station'].mode()[0]
@@ -156,7 +154,7 @@ def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
 
     print('\nCalculating Trip Duration...\n')
-    start_time = time.time()
+
     # TO DO: display total travel time
     total_travel_time = df['Trip Duration'].sum()
     total_travel_time = str(dt.timedelta(seconds=int(total_travel_time)))
@@ -176,7 +174,6 @@ def user_stats(df):
     E.g. gender assessment is not possible for all data sets."""
 
     print('\nCalculating User Stats...\n')
-    start_time = time.time()
 
     # TO DO: Display counts of user types
     user_types = df['User Type'].value_counts().to_dict()
